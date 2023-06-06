@@ -1,9 +1,11 @@
 package com.cibertec.cibertecapp.login
 
+import android.app.Activity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.cibertec.cibertecapp.network.LoginResponse
+import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -14,11 +16,13 @@ class LoginViewModel: ViewModel() {
 
     private val repository = LoginRepository()
     private val composable = CompositeDisposable()
+    private lateinit var auth: FirebaseAuth
 
     val userLoginServiceResponse = MutableLiveData<Boolean>()
 
     fun login(email: String, pass: String) {
-        loginRetrofit(email, pass)
+        // loginRetrofit(email, pass)
+        loginFirebase(email, pass)
     }
 
     private fun loginRetrofit(email: String, pass: String) {
@@ -39,7 +43,16 @@ class LoginViewModel: ViewModel() {
     }
 
     private fun loginFirebase(email: String, pass: String) {
-
+        auth = FirebaseAuth.getInstance()
+        auth.signInWithEmailAndPassword(email, pass)
+            .addOnCompleteListener(Activity()) {task ->
+                if (task.isSuccessful) {
+                    val userId = task.result?.user?.uid
+                    userLoginServiceResponse.value = true
+                } else {
+                    userLoginServiceResponse.value = false
+                }
+            }
     }
 
 }
