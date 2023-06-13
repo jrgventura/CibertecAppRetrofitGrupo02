@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cibertec App</string>
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyD2eBQqP0vYiKNRskz8OzDiJ0Zr3Or0VT8</string>
 </resources>

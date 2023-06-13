@@ -15,7 +15,7 @@
         android:theme="@style/Theme.CibertecApp"
         tools:targetApi="31">
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".video.VideoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,10 @@
 
         <activity android:name=".MainActivity" />
         <activity android:name=".registro.RegistroActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
     </application>
 
